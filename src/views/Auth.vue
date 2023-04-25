@@ -52,6 +52,10 @@ export default {
       }
       
     }
+  },
+  mounted(){
+    console.log('подсказонька');
+    console.log(JSON.parse(localStorage.getItem('user'))); 
   }
 }
 </script>

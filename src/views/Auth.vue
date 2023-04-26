@@ -1,5 +1,5 @@
 <template>
-  <form action="#">
+  <form action="GET">
     <div class="login">
       <section class="login__container">
         <h1 class="login__title">Войдите в аккаунт</h1>
@@ -7,60 +7,73 @@
         <div class="login__item">
           <label for="email" class="login__item-name">Email</label>
           <div class="login__wrapper">
-            <input v-model="email" id="email" type="email" class="login__item-field" />
+            <input
+              v-model="email"
+              id="email"
+              type="email"
+              class="login__item-field"
+            />
           </div>
         </div>
 
         <div class="login__item">
           <label for="password" class="login__item-name">Password</label>
           <div class="login__wrapper">
-            <input v-model="password" id="password" type="password" class="login__item-field" />
+            <input
+              v-model="password"
+              id="password"
+              type="password"
+              class="login__item-field"
+            />
           </div>
         </div>
+
         <p v-show="error" class="login__error">Пользователь не найден</p>
+
         <button @click.prevent="checkUser" class="login__btn">Войти</button>
+
         <span class="login__text">
           Нет аккаунта?
           <router-link to="reg" class="login__link"
             >Зарегистрироваться</router-link
           >
         </span>
+
       </section>
     </div>
   </form>
 </template>
 
 <script>
-import router from '@/router';
+import router from "@/router";
 export default {
-  name: 'Auth',
-  data(){
-    return{
+  name: "Auth",
+  data() {
+    return {
       error: false,
-      email: '',
-      password: '',
-    }
+      email: "",
+      password: "",
+    };
   },
-  methods:{
-    checkUser(){
-      const savedUser = JSON.parse(localStorage.getItem('user'));
-      const {password, email} = savedUser;
-      if(password === this.password && email === this.email){
-        router.push('home')
-      } else{
+  methods: {
+    checkUser() {
+      const savedUser = JSON.parse(localStorage.getItem("user"));
+      const { password, email } = savedUser;
+      if (password === this.password && email === this.email) {
+        router.push("home");
+      } else {
         this.error = true;
       }
-      
-    }
+    },
   },
-  mounted(){
-    console.log('подсказонька');
-    console.log(JSON.parse(localStorage.getItem('user'))); 
-  }
-}
+  mounted() {
+    console.log("подсказонька");
+    console.log(JSON.parse(localStorage.getItem("user")));
+  },
+};
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .login {
   display: flex;
   justify-content: center;
@@ -97,7 +110,7 @@ export default {
     outline: none;
     padding: 0px 10px;
   }
-  &__error{
+  &__error {
     margin: 0px 0px 10px 0px;
     color: red;
     text-align: center;

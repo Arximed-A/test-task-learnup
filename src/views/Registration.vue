@@ -45,7 +45,6 @@
       <div class="registration__item">
         <RegistrationItem name="телефон" :error="phoneError">
           <input
-            @keypress.prevent="changePhone"
             v-model="phone"
             type="text"
             class="reg-item__input"
@@ -64,7 +63,7 @@
 </template>
 
 <script>
-import router from '@/router';
+import router from "@/router";
 import RegistrationItem from "../components/RegistrationItem.vue";
 
 export default {
@@ -85,12 +84,31 @@ export default {
       phoneError: false,
     };
   },
-  watch:{
-    phone(){
-      // if(this.phone.length === 2){
-      //   this.phone = this.phone + '('
-      // }
-    }
+  watch: {
+    phone() {
+      const arrayPhone = Array.from(this.phone);
+      const length = arrayPhone.length;
+
+      if (length === 1 && this.phone === "8") {
+        return (this.phone = "+7");
+      }
+      if (length === 3 && this.phone[2] !== "(") {
+        arrayPhone.splice(2, 0, "(");
+        return (this.phone = arrayPhone.join(""));
+      }
+      if (length === 7 && this.phone[6] !== ")") {
+        arrayPhone.splice(6, 0, ")");
+        return (this.phone = arrayPhone.join(""));
+      }
+      if (length === 11 && this.phone[10] !== "-") {
+        arrayPhone.splice(10, 0, "-");
+        return (this.phone = arrayPhone.join(""));
+      }
+      if (length === 14 && this.phone[13] !== "-") {
+        arrayPhone.splice(13, 0, "-");
+        return (this.phone = arrayPhone.join(""));
+      }
+    },
   },
   methods: {
     checkUser() {
@@ -115,31 +133,9 @@ export default {
         phone: this.phone,
       };
       localStorage.setItem("user", JSON.stringify(user));
-      router.push('/home')
+      router.push("/home");
     },
 
-    changePhone(event) {
-      const key = event.key;
-      const rule = /[\d()+-]/;
-      const result = rule.test(String(key));
-      if(result){
-        if(this.phone.length === 0 && +key === 8 || this.phone.length === 0 && +key === 7){
-          return this.phone = '+7('
-        }
-        if(this.phone.length === 1 && +key === 7){
-          return this.phone = '+7('
-        }
-        if(this.phone.length === 5){
-          return this.phone = this.phone + key + ') ';
-        }
-
-        if(this.phone.length === 10 || this.phone.length === 13){
-          return this.phone = this.phone + key + '-';
-        }
-        this.phone = this.phone + key;
-      }
-    },
-    
     checkLogin() {
       const rule = /^[a-zA-Z]/;
       const result = rule.test(String(this.login));
@@ -157,7 +153,7 @@ export default {
         : (this.passwordError = true);
     },
     checkPhone() {
-      const rule = /^(\+7|8)\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/;
+      const rule = /^(\+7|8)\(\d{3}\)\d{3}-\d{2}-\d{2}$/;
       const result = rule.test(String(this.phone).toLowerCase());
       result ? (this.phoneError = false) : (this.phoneError = true);
     },

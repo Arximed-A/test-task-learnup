@@ -10,28 +10,27 @@
 export default {};
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .home {
   background: rgba(0, 204, 255, 0.705);
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content:center;align-items: center;
-		&__title {
-      
+  justify-content: center;
+  align-items: center;
+  &__title {
+  }
+  &__subtitle {
+    margin: 0px 0px 50px 0px;
+  }
+  &__link {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      color: blue;
     }
-    &__subtitle{
-      margin: 0px 0px 50px 0px;
-    }
-		&__link {
-      font-size: 20px;
-      color: white;
-      text-decoration: none;
-      transition: all 0.3s ease 0s;
-      &:hover{
-        color: blue;
-      }
-    }
+  }
 }
-
 </style>
